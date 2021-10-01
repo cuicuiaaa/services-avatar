@@ -1,7 +1,8 @@
 from dataclasses import dataclass
-from flask import Flask, jsonify, abort
+from flask import Flask, jsonify, abort, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+import requests
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://root:root@db/appointment'
@@ -33,9 +34,25 @@ class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     location = db.Column(db.String(200))
 
-@app.route('/')
-def index():
-    return 'Hello'
+@app.route('/api/user/<int:id>')
+def index(id):
+    req = requests.get('http://docker.for.mac.localhost:8000/api/user/' + str(id))
+    return jsonify(req.json())
+
+@app.route('/api/user/<int:id>', methods=['PUT'])
+def bookCovidTest(id):
+    user = User.query.get(id)
+    user.appointment_location = request.json.get('appointment_location')
+    user.appointment_date = request.json.get('appointment_date')
+    db.session.commit()
+    return jsonify({
+        'message': 'success'
+    })
+
+@app.route('/api/user/<int:id>/test')
+def getTestAppointment(id):
+    user = User.query.get(id)
+    return jsonify(user)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
