@@ -54,5 +54,10 @@ def getTestAppointment(id):
     user = User.query.get(id)
     return jsonify(user)
 
+@app.route('/api/locations')
+def getTestLocations():
+    locations = Location.query.all()
+    return jsonify(locations)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
