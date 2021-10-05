@@ -39,9 +39,10 @@ def updateTestResult(id):
         'message': 'success'
     })
 
-@app.route('/api/user/<int:id>/result')
-def getTestResult(id):
-    user = User.query.get(id)
+@app.route('/api/user/result', methods=['POST'])
+def getTestResult():
+    email = request.json.get('email')
+    user = User.query.filter_by(email=email).first()
     return jsonify(user)
 
 if __name__ == '__main__':
