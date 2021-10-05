@@ -1,6 +1,6 @@
 import pika, json
 
-from appointment import User, db
+from result import User, db
 
 params = pika.URLParameters('amqps://meiozege:n3veFiC_O8waZbEG0GVXXr1D6s9hRCLa@vulture.rmq.cloudamqp.com/meiozege')
 
@@ -8,11 +8,11 @@ connection = pika.BlockingConnection(params)
 
 channel = connection.channel()
 
-channel.queue_declare(queue='appointment')
+channel.queue_declare(queue='result')
 
 
 def callback(ch, method, properties, body):
-    print('Received in appointment')
+    print('Received in result')
     data = json.loads(body)
     print(data)
 
@@ -29,7 +29,7 @@ def callback(ch, method, properties, body):
         print('User Deleted')
 
 
-channel.basic_consume(queue='appointment', on_message_callback=callback, auto_ack=True)
+channel.basic_consume(queue='result', on_message_callback=callback, auto_ack=True)
 
 print('Started Consuming')
 
