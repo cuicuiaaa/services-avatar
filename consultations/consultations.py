@@ -45,8 +45,8 @@ def index(id):
 def bookConsultation(id):
     user = User.query.get(id)
     user.consultation_location = request.json.get('consultation_location')
-    user.consultation_date = request.json.get('aconsultation_date')
-    user.consultation_type = request.json.get('consultation_type')
+    user.consultation_date = request.json.get('consultation_date')
+    user.doctor = request.json.get('doctor')
     db.session.commit()
     return jsonify({
         'message': 'success'
