@@ -11,3 +11,4 @@ def publish(method, body):
     properties = pika.BasicProperties(method)
     channel.basic_publish(exchange='', routing_key='appointment', body=json.dumps(body), properties=properties)
     channel.basic_publish(exchange='', routing_key='result', body=json.dumps(body), properties=properties)
+    channel.basic_publish(exchange='', routing_key='consultations', body=json.dumps(body), properties=properties)
