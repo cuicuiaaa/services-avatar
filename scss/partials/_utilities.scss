@@ -1,0 +1,127 @@
+.visible {
+  display: block !important;
+}
+
+.invisible {
+  display: none !important;
+}
+
+.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.success {
+  color: $color-green;
+}
+.fail {
+  color: $color-red;
+}
+
+.nav__link {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  line-height: 6.5rem;
+  text-transform: uppercase;
+  color: $color-light;
+  @include transition(all, 0.2s);
+
+  &:hover,
+  &.active {
+    background-color: $color-primary;
+  }
+}
+
+.header {
+  &__home {
+    .container {
+      height: calc(70vh + 6.5rem);
+    }
+  }
+
+  &__other {
+    .container {
+      height: 50vh;
+    }
+  }
+}
+
+.container {
+  position: relative;
+  max-width: $site-width;
+  margin: 0 auto;
+  padding: 0 3rem;
+
+  @include responsive(medium) {
+    max-width: 96rem;
+    padding: 0 3.75rem;
+  }
+
+  @include responsive(small) {
+    max-width: 70rem;
+  }
+}
+
+.par-other {
+  font-size: 2.8rem;
+}
+
+.other-page {
+  min-height: 50rem;
+  background-color: #e9ecec;
+}
+
+.heading {
+  &__primary {
+    font-size: 3.6rem;
+    line-height: 1;
+  }
+  &__secondary {
+    font-size: 2.2rem;
+    word-spacing: 0.2rem;
+  }
+}
+
+.btn {
+  &__primary {
+    font-weight: set-weight(medium);
+    background-color: $color-primary;
+    color: $color-light;
+    font-size: 1.6rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem 2.2rem;
+    border: 1px solid $dark-blue;
+    cursor: pointer;
+    line-height: 1.6;
+    @include transition(all, 0.4s);
+
+    &:hover {
+      background-color: $color-light;
+      color: $color-dark;
+    }
+
+    @include responsive(medium) {
+      font-size: 2rem;
+    }
+  }
+}
+
+.half-width {
+  @include flex-center(space-between);
+
+  .form__input {
+    flex-basis: 48.5%;
+  }
+
+  @include responsive(small) {
+    flex-direction: column;
+
+    .form__input {
+      flex-basis: 100%;
+
+      &:first-child {
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}

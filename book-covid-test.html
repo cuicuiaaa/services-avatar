@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Book a Covid Test | Service Avatar</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="container">
+
+      <!-- Navigation -->
+      <nav class="navbar__nav visible">
+        <ul>
+          <li>
+            <a href="index.html" class="nav__link" title="Home">Home</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Logo -->
+      <div class="navbar__logo">Avatar Service</div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header header__other">
+    <div class="container">
+      <p>
+        Book a Covid Test
+      </p>
+    </div>
+  </header>
+
+  <!-- Other page -->
+  <div class="other-page py-8">
+
+    <!-- Book a Covid Test -->
+    <section class="container">
+      <p class="par-other myb-3">Please book your covid test by filling the below form.</p>
+      <div class="form-holder">
+
+        <!-- First Step -->
+        <form class="form" id="first-step">
+          <div class="form__group">
+            <input name="fname" class="form__input" type="text" placeholder="First Name *" required />
+          </div>
+          <div class="form__group">
+            <input name="lname" class="form__input" type="text" placeholder="Last Name *" required />
+          </div>
+          <div class="form__group">
+            <input name="email" class="form__input" type="email" placeholder="Email *" required />
+          </div>
+          <div class="form__group">
+            <button name="submit" class="btn__primary" id="book-covid-next">
+              Next
+            </button>
+          </div>
+        </form>
+
+        <!-- Second Step -->
+        <form class="form invisible" id="second-step">
+          <div class="form__group">
+            <input name="location" class="form__input" type="text" placeholder="Location *" required />
+          </div>
+          <div class="form__group">
+            <input name="date" class="form__input" type="text" placeholder="Date *" required />
+          </div>
+          <div class="form__group">
+            <button name="submit" class="btn__primary" id="book-covid-submit">
+              Subimt
+            </button>
+          </div>
+        </form>
+
+      </div>
+      <div class="form__group invisible success">Your appointment booked successfully!</div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <Footer class="footer py-3">
+    <div class="container">
+      Copyright &copy; <span id="current__year"></span> All Rights Reserved.
+    </div>
+  </Footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

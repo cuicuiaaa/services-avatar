@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Check your result | Service Avatar</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="container">
+
+      <!-- Navigation -->
+      <nav class="navbar__nav visible">
+        <ul>
+          <li>
+            <a href="index.html" class="nav__link" title="Home">Home</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Logo -->
+      <div class="navbar__logo">Avatar Service</div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header header__other">
+    <div class="container">
+      <p>
+        Check your result
+      </p>
+    </div>
+  </header>
+
+  <!-- Other page -->
+  <div class="main-content other-page py-8">
+
+    <!-- Book a Covid Test -->
+    <section class="container">
+      <p class="par-other myb-3">Please check your covid test result here.</p>
+      <div class="form-holder">
+        <form class="form">
+          <div class="form__group">
+            <input name="email" class="form__input" type="email" placeholder="Email *" required />
+          </div>
+          <div class="form__group">
+            <button name="submit" class="btn__primary" id="check-result">
+              Check Result
+            </button>
+          </div>
+          <div class="form__group invisible fail">Wrong email!</div>
+        </form>
+
+        <!-- Summary -->
+        <div class="form-holder__summary invisible" id="summary">
+          <p><span class="label">First Name:</span> <span class="data" id="summary-fname"></span></p>
+          <p><span class="label">Last Name:</span> <span class="data" id="summary-lname"></span></p>
+          <p><span class="label">Email:</span> <span class="data" id="summary-email"></span></p>
+          <p><span class="label">Covid test result:</span> <span class="data" id="summary-result"></span></p>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <Footer class="footer py-3">
+    <div class="container">
+      Copyright &copy; <span id="current__year"></span> All Rights Reserved.
+    </div>
+  </Footer>
+
+  <!-- Scripts -->
+  <script src="js/jquery-3.5.1.min.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

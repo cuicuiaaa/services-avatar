@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+
+$font-primary: 'Open Sans', sans-serif;
+$color-primary: #2e5299;
+$dark-blue: #002664;
+$color-light: #f4f7f9;
+$color-dark: #242934;
+$color-dark-2: #e3e3e3;
+$color-green: #0b850b;
+$color-red: #f70a0a;
+$site-width: 120rem;
+
+$font-weight: (
+  'exlight': 200,
+  'light': 300,
+  'regular': 400,
+  'medium': 500,
+  'semibold': 600,
+  'bold': 700,
+);
+
+@function set-weight($weight) {
+  @return map-get($font-weight, $weight);
+}
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == small {
+    @media only screen and (max-width: 47.9375em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == medium {
+    @media only screen and (max-width: 61.9375em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == large {
+    @media only screen and (max-width: 73em) {
+      @content;
+    }
+  }
+}
+
+@mixin flex-center($justification) {
+  display: flex;
+  align-items: center;
+  justify-content: $justification;
+}
+
+@mixin transition($property, $duration) {
+  transition: $property;
+  transition-duration: $duration;
+  transition-timing-function: ease;
+}
+
+@for $space from 1 through 12 {
+  @if $space == 1 {
+    .p-#{$space} {
+      padding: #{$space + 0.5}rem;
+    }
+    .py-#{$space} {
+      padding: #{$space + 0.5}rem 0;
+    }
+    .pyb-#{$space} {
+      padding-bottom: #{$space + 0.5}rem;
+    }
+    .m-#{$space} {
+      margin: #{$space + 0.5}rem;
+    }
+    .my-#{$space} {
+      margin: #{$space + 0.5}rem 0;
+    }
+    .myb-#{$space} {
+      margin-bottom: #{$space + 0.5}rem;
+    }
+  } @else {
+    .p-#{$space} {
+      padding: #{$space}rem;
+    }
+    .py-#{$space} {
+      padding: #{$space}rem 0;
+    }
+    .pyb-#{$space} {
+      padding-bottom: #{$space}rem;
+    }
+    .m-#{$space} {
+      margin: #{$space}rem;
+    }
+    .my-#{$space} {
+      margin: #{$space}rem 0;
+    }
+    .myb-#{$space} {
+      margin-bottom: #{$space}rem;
+    }
+  }
+}
