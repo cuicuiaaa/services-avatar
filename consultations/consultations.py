@@ -62,5 +62,11 @@ def getTestLocations():
     locations = Location.query.all()
     return jsonify(locations)
 
+@app.route('/api/user/consultations', methods=['POST'])
+def getUserConsultations():
+    email = request.json.get('email')
+    user = User.query.filter_by(email=email).first()
+    return jsonify(user)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

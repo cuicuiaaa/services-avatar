@@ -27,6 +27,13 @@ def callback(ch, method, properties, body):
         db.session.delete(user)
         db.session.commit()
         print('User Deleted')
+    
+    elif properties.content_type == 'user_appointment_updated':
+        user = User.query.get(data['id'])
+        user.appointment_location = data['appointment_location']
+        user.appointment_date = data['appointment_date']
+        db.session.commit()
+        print('User Appointment Updated')
 
 
 channel.basic_consume(queue='appointment', on_message_callback=callback, auto_ack=True)

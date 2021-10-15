@@ -24,6 +24,14 @@ def callback(ch, method, properties, body):
         db.session.delete(user)
         db.session.commit()
         print('User Deleted')
+    
+    elif properties.content_type == 'user_consultations_updated':
+        user = User.query.get(data['id'])
+        user.consultation_location = data['consultation_location']
+        user.consultation_date = data['consultation_date']
+        user.doctor = data['doctor']
+        db.session.commit()
+        print('User Consultations Updated')
 
 channel.basic_consume(queue='consultations',on_message_callback=callback, auto_ack=True)
 

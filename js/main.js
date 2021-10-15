@@ -35,33 +35,60 @@ $(function () {
   });
 });
 
+
+
 ////////////////////////////////// Ajax //////////////////////////////////
 const baseUrl = 'http://localhost:8000';
+let id = 0;
 
 // Book covid test
 $(function () {
   $(document).on('click', '#book-covid-next', function (e) {
     e.preventDefault();
-    console.log("hit");
     let fname = $('[name="fname"]').val();
     let lname = $('[name="lname"]').val();
     let email = $('[name="email"]').val();
 
     $.ajax({
-      url: baseUrl + '/api/users',
+      url: baseUrl + '/api/user',
+      dataType: 'json',
       type: 'post',
       data: {
-        first_name: fname,
-        last_name: lname,
-        email: email,
+        email: email
       },
       beforeSend: function () {
         $('#book-covid-next').addClass('disabled');
       },
       success: function (data) {
-        //next step
-        $('#first-step').hide();
-        $('#second-step').removeClass("invisible");
+        if (data != null) {
+          id = data.id;
+          //next step
+          $('#first-step').hide();
+          $('#second-step').removeClass("invisible");
+        } else {
+          $.ajax({
+            url: baseUrl + '/api/users',
+            type: 'post',
+            data: {
+              first_name: fname,
+              last_name: lname,
+              email: email,
+            },
+            success: function (data) {
+              id = data.id;
+              //next step
+              $('#first-step').hide();
+              $('#second-step').removeClass("invisible");
+            },
+            error: function () {
+              alert('Something wrong!');
+            },
+            complete: function () {
+              $('#book-covid-next').removeClass('disabled');
+            },
+          });
+        }
+        
       },
       error: function () {
         alert('Something wrong!');
@@ -72,12 +99,13 @@ $(function () {
     });
   });
 
-  $(document).on('click', '#book-covid-submit', function () {
+  $(document).on('click', '#book-covid-submit', function (e) {
+    e.preventDefault();
     let location = $('[name="location"]').val();
     let date = $('[name="date"]').val();
 
     $.ajax({
-      url: baseUrl + 'api/user/10',
+      url: baseUrl + '/api/appointment/' + id,
       type: 'PUT',
       data: {
         appointment_location: location,
@@ -101,48 +129,76 @@ $(function () {
 
 // Book doctor appointment
 $(function () {
-  $(document).on('click', '#book-doc-next', function () {
+  $(document).on('click', '#book-doc-next', function (e) {
+    e.preventDefault();
     let fname = $('[name="fname"]').val();
     let lname = $('[name="lname"]').val();
     let email = $('[name="email"]').val();
 
     $.ajax({
-      url: baseUrl + 'api/users',
+      url: baseUrl + '/api/user',
+      dataType: 'json',
       type: 'post',
       data: {
-        first_name: fname,
-        last_name: lname,
-        email: email,
+        email: email
       },
       beforeSend: function () {
         $('#book-doc-next').addClass('disabled');
       },
-      success: function () {
-        //next step
-        $('#first-step').hide();
-        $('#second-step').fadeIn();
+      success: function (data) {
+        console.log(data);
+        if (data != null) {
+          id = data.id;
+          //next step
+          $('#first-step').hide();
+          $('#second-step').removeClass("invisible");
+        } else {
+          $.ajax({
+            url: baseUrl + '/api/users',
+            type: 'post',
+            data: {
+              first_name: fname,
+              last_name: lname,
+              email: email,
+            },
+            success: function (data) {
+              id = data.id;
+              //next step
+              $('#first-step').hide();
+              $('#second-step').removeClass("invisible");
+            },
+            error: function () {
+              alert('Something wrong!');
+            },
+            complete: function () {
+              $('#book-doc-next').removeClass('disabled');
+            },
+          });
+        }
+        
       },
       error: function () {
         alert('Something wrong!');
       },
       complete: function () {
-        $('#book-doc-next').removeClass('disabled');
+        $('#book-covid-next').removeClass('disabled');
       },
     });
   });
 
-  $(document).on('click', '#book-doc-submit', function () {
+  $(document).on('click', '#book-doc-submit', function (e) {
+    e.preventDefault();
     let location = $('[name="location"]').val();
     let date = $('[name="date"]').val();
     let doctor = $('[name="doctor"]').val();
 
     $.ajax({
-      url: baseUrl + 'api/user/10',
+      url: baseUrl + '/api/consults/' + id,
       type: 'PUT',
       data: {
         consultation_location: location,
         consultation_date: date,
-        consultation_doctor: doctor,
+        doctor: doctor,
       },
       beforeSend: function () {
         $('#book-doc-submit').addClass('disabled');
@@ -162,28 +218,37 @@ $(function () {
 
 // Check covid result
 $(function () {
-  $(document).on('click', '#check-result', function () {
+  $(document).on('click', '#check-result', function (e) {
+    e.preventDefault();
     let email = $('[name="email"]').val();
 
     $.ajax({
-      url: baseUrl + '/api/user/' + email + '/test',
-      type: 'GET',
+      url: baseUrl + '/api/result',
+      type: 'put',
+      data: {
+        email: email
+      },
       beforeSend: function () {
         $('#summary').addClass('invisible');
         $('#check-result').addClass('disabled');
-        $('.fail').hide();
       },
       error: function () {
         $('.fail').removeClass('invisible');
       },
       success: function (res) {
-        $('#summary').removeClass('invisible');
-        $('$summary-fname').html(res['fname']);
-        $('$summary-lname').html(res['lname']);
-        $('$summary-email').html(res['email']);
-        $('$summary-result').html(
-          res['result'] == true ? 'Positive' : 'Negative'
-        );
+        console.log(res);
+        if (res != null) {
+          $('.fail').addClass('invisible');
+          $('#summary').removeClass('invisible');
+          $('#summary-fname').html(res['first_name']);
+          $('#summary-lname').html(res['last_name']);
+          $('#summary-email').html(res['email']);
+          $('#summary-result').html(
+            res['test_result'] == true ? 'Positive' : 'Negative'
+          );
+        } else {
+          $('.fail').removeClass('invisible');
+        }
       },
       complete: function () {
         $('#check-result').removeClass('disabled');
