@@ -28,6 +28,7 @@ $(function () {
 $(function () {
   $.ajax({
     url: 'http://localhost:8000/api/users',
+    dataType: 'json',
     type: 'get',
     success: function(data) {
       console.log(data);
@@ -39,7 +40,40 @@ $(function () {
 
 ////////////////////////////////// Ajax //////////////////////////////////
 const baseUrl = 'http://localhost:8000';
+const appointmentUrl = 'http://localhost:8002';
+const consultationsUrl = 'http://localhost:8003';
 let id = 0;
+
+//get covid test locations
+var getCovidTestLocations = function() {
+  $.ajax({
+    url: appointmentUrl + '/api/locations',
+    dataType: 'json',
+    type: 'get',
+    success: function(data) {
+      $.each(data, function(index, value) {
+        let locationOption = "<option value=" + `"${value.location}"` + ">" + value.location + "</option>";
+        $(locationOption).appendTo($('#covid-test-locations'));
+      })
+    }
+  });
+}
+
+//get doctor appointment locations
+var getDoctorAppointmentLocations = function() {
+  $.ajax({
+    url: consultationsUrl + '/api/locations',
+    dataType: 'json',
+    type: 'get',
+    success: function(data) {
+      console.log(data);
+      $.each(data, function(index, value) {
+        let locationOption = "<option value=" + `"${value.location}"` + ">" + value.location + "</option>";
+        $(locationOption).appendTo($('#doctor-appointment-locations'));
+      })
+    }
+  });
+}
 
 // Book covid test
 $(function () {
@@ -65,6 +99,7 @@ $(function () {
           //next step
           $('#first-step').hide();
           $('#second-step').removeClass("invisible");
+          getCovidTestLocations();
         } else {
           $.ajax({
             url: baseUrl + '/api/users',
@@ -79,6 +114,7 @@ $(function () {
               //next step
               $('#first-step').hide();
               $('#second-step').removeClass("invisible");
+              getCovidTestLocations();
             },
             error: function () {
               alert('Something wrong!');
@@ -102,6 +138,7 @@ $(function () {
   $(document).on('click', '#book-covid-submit', function (e) {
     e.preventDefault();
     let location = $('[name="location"]').val();
+    console.log(location);
     let date = $('[name="date"]').val();
 
     $.ajax({
@@ -152,12 +189,12 @@ $(function () {
         $('#book-doc-next').addClass('disabled');
       },
       success: function (data) {
-        console.log(data);
         if (data != null) {
           id = data.id;
           //next step
           $('#first-step').hide();
           $('#second-step').removeClass("invisible");
+          getDoctorAppointmentLocations();
         } else {
           $.ajax({
             url: baseUrl + '/api/users',
@@ -172,6 +209,7 @@ $(function () {
               //next step
               $('#first-step').hide();
               $('#second-step').removeClass("invisible");
+              getDoctorAppointmentLocations();
             },
             error: function () {
               alert('Something wrong!');
