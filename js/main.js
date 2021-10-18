@@ -117,8 +117,14 @@ $(function () {
       error: function () {
         alert('Something wrong!');
       },
-      success: function () {
+      success: function (res) {
         $('.success').removeClass('invisible');
+        $('#summary').removeClass('invisible');
+        $('#summary-fname').html(res['first_name']);
+        $('#summary-lname').html(res['last_name']);
+        $('#summary-email').html(res['email']);
+        $('#summary-appointment-location').html(res['appointment_location']);
+        $('#summary-appointment-date').html(res['appointment_date']);
       },
       complete: function () {
         $('#book-covid-submit').removeClass('disabled');
@@ -206,8 +212,15 @@ $(function () {
       error: function () {
         alert('Something wrong!');
       },
-      success: function () {
+      success: function (res) {
         $('.success').removeClass('invisible');
+        $('#summary').removeClass('invisible');
+        $('#summary-fname').html(res['first_name']);
+        $('#summary-lname').html(res['last_name']);
+        $('#summary-email').html(res['email']);
+        $('#summary-doctor').html(res['doctor']);
+        $('#summary-consultations-location').html(res['consultation_location']);
+        $('#summary-consultations-date').html(res['consultation_date']);
       },
       complete: function () {
         $('#book-doc-submit').removeClass('disabled');
